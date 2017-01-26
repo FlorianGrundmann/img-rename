@@ -23,8 +23,11 @@ def get_creation_date(imgPath):
     tags = get_tags(imgPath)
     if tags is not None:
         datePattern = re.compile(r"(\d\d\d\d):(\d\d):(\d\d)")
-        matchObject = datePattern.search(str(tags["EXIF DateTimeOriginal"]))
-        return matchObject.group().replace(":", "-")
+        try:
+            matchObject = datePattern.search(str(tags["EXIF DateTimeOriginal"]))
+            return matchObject.group().replace(":", "-")
+        except KeyError:
+            return None
     else:
         return None
 
