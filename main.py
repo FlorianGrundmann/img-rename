@@ -33,8 +33,10 @@ def parse_args(args):
 def main():
     args = parse_args(sys.argv[1:])
     if os.path.isdir(args.dir):
+        print("\nStarting renaming...")
         for (path, _dirs, _files) in os.walk(args.dir):
             core.rename_imgs(path)
+        print("...renaming finished.")
     else:
         print("Given directory doesn't exist.")
         print("Usage: main.py <directory>")

@@ -41,7 +41,8 @@ def rename_imgs(dirPath):
     """
     imgs = fu.get_all_file_names(dirPath, ".jpg")
     if imgs is not None:
-        logger.info("Found {0} images in {1}. Starting to rename files.".format(len(imgs), dirPath))
+        logger.info("Found {0} images in {1}.".format(len(imgs), dirPath))
+        logger.info("Starting to rename files.")
         n = 0
         for img in imgs:
             name = get_new_name(os.path.join(dirPath, img), dirPath)
@@ -49,8 +50,8 @@ def rename_imgs(dirPath):
                 n += 1
                 os.rename(os.path.join(dirPath, img), os.path.join(dirPath, name))
         
-        logger.info("Finished renaming.")
         logger.info("Renamed {0} files. Failed to rename {1} files.".format(n, len(imgs)-n))
+        logger.info("Finished renaming files in {0}.".format(dirPath))
 
 def _search_for_files(dirPath, extension):
     try:
@@ -74,7 +75,7 @@ def get_new_name(imgPath, destinationPath):
     date = eu.get_creation_date(imgPath)
     if date is None:
         logger.debug("Couldn't get creation date for the file {0}".format(imgPath))
-        return
+        return None
     n = 0
     name = _construct_name(date, n)
     new_path = os.path.join(os.path.dirname(imgPath), name)
